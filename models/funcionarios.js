@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   // o funcionarios tem um relacionamento com o cursos de n:n 
   funcionarios.belongsToMany(models.cursos,{
     through:'funcionariocursos',
-    as: 'tags',
+    as: 'fc',
     foreignKey:'funcionarioId',
     
   })

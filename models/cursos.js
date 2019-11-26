@@ -5,12 +5,19 @@ module.exports = (sequelize, DataTypes) => {
     cargaHoraria: DataTypes.STRING
   }, {});
   cursos.associate = function(models) {
+    
     cursos.belongsToMany(models.funcionarios,{
 
       through:'funcionariocursos',
       as:'posts',
       foreignKey:'cursoId',
       
+    })
+    cursos.belongsToMany(models.funcoes,{
+
+      through:'funcaocurso',
+      as:'funcaoc',
+      foreignkey:'cursoId',
     })
 
     

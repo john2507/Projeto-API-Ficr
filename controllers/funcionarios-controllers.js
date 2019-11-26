@@ -6,12 +6,12 @@ module.exports = {
    // inserindo no banco
    create :  async (req, res) => {
     try {
-      const { tags, ...data } = req.body;
+      const { fc, ...data } = req.body;
       
       const post = await funcionarios.create(data);
       
-      if (tags && tags.length > 0) {
-        post.setTags(tags);
+      if (fc && fc.length > 0) {
+        post.setFc(fc);
       }
   
       return res.status(200).json(post);
@@ -24,14 +24,15 @@ module.exports = {
   put : async (req, res) => {
     
     try {
-      const { id } = req.params;
-      const post = await funcionarios.findById(id);
+      //const { id } = req.params;
+      const post = await funcionarios.findByPk(req.params.id)
+        
   
-      const { tags, ...data } = req.body;
+      const { fc, ...data } = req.body;
       post.update(data);
   
-      if (tags && tags.length > 0) {
-        post.settags(tags);
+      if (fc && fc.length > 0) {
+        post.setFc(fc);
       }
   
       return res.status(200).json(post);
@@ -44,21 +45,15 @@ module.exports = {
   list: async (req, res) => {
     
     try {
-      
       const posts = await funcionarios.findAll({
         include: [
           {
-     
             model: cursos,
-            as: 'tags',
+            as: 'fc',
            through: { attributes: [] },
-            
           },
-          
         ],
-        
-      });    
-  
+      });   
       return res.status(200).json(posts);
     } catch (err) {
       return res.status(500).json({ err });
@@ -67,8 +62,9 @@ module.exports = {
  
   // deletando 
   destroy(req,res){
-    funcionarios.destroy({
-      where: {'id': req.params.id}
+    funcionarios.destroy({where: {'id': req.params.id}
+
+      
   }).then(function(){
       //res.redirect('/funcionario')/
       res.send("Funcionario Excluido com sucesso")
@@ -77,7 +73,6 @@ module.exports = {
       res.send("erro ao deletar funcionarios");
   
   })},
-
      
 }
 

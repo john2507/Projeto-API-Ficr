@@ -10,8 +10,6 @@ module.exports = (sequelize, DataTypes) => {
       through:'funcaocurso',
       as:'funcao',
       foreignKey:'funcaoId',
-      
-
     })
   };
   return funcoes;
