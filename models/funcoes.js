@@ -5,12 +5,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   funcoes.associate = function(models) {
     // associations can be defined here
-    funcoes.belongsToMany(models.cursos,{
+    
+
+  funcoes.belongsToMany(models.cursos,{
 
       through:'funcaocurso',
       as:'funcao',
       foreignKey:'funcaoId',
     })
-  };
+  }
   return funcoes;
 };

@@ -20,6 +20,28 @@ module.exports = {
     }
   },
 
+   getRestaurant(req, res){
+    var restaurantId = req.params.id;
+  
+    funcionarios.findById(restaurantId).populate({path: 'user'}).exec((err, funcionarios) => {
+      if(err){
+        res.status(500).send({
+          message: 'Error na solicitação'
+        });
+      }else{
+        if(!funcionarios){
+          res.status(404).send({
+            message: 'Não existe nenhum restaurante nesse registro'
+          });
+        }else{
+          res.status(200).send({
+            funcionarios
+          });
+        }
+      }
+    });
+  },
+  
   // update
   put : async (req, res) => {
     
@@ -45,7 +67,7 @@ module.exports = {
   list: async (req, res) => {
     
     try {
-      const posts = await funcionarios.findAll({
+      const posts = await funcionarios.findAll(({
         include: [
           {
             model: cursos,
